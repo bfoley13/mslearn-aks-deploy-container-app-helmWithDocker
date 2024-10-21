@@ -50,7 +50,7 @@ env:
   BUILD_CONTEXT_PATH: ./
   CHART_PATH: ./templates
   CHART_OVERRIDE_PATH: ./values.yaml
-  CHART_OVERRIDES: image.repository=acrworkflow1729549671164.azurecr.io/image-workflow-1729549671164,image.tag=${{ github.sha }}
+  CHART_OVERRIDES: image.repository=acrworkflow1729549671164.azurecr.io/image-workflow-1729549671164,
   NAMESPACE: namespace-workflow-1729549671164
 
 jobs:
@@ -131,5 +131,5 @@ jobs:
 
       - name: Deploy application on public cluster
         if : steps.isPrivate.outputs.PRIVATE_CLUSTER == '' || steps.isPrivate.outputs.PRIVATE_CLUSTER == 'false'
-        run: helm upgrade --wait -i -f ${{ env.CHART_OVERRIDE_PATH }} --set ${{ env.CHART_OVERRIDES }} --set image.tag=${{ github.sha }} automated-deployment ${{ env.CHART_PATH }} --namespace ${{ env.NAMESPACE }} --create-namespace
+        run: helm upgrade --wait -i -f ${{ env.CHART_OVERRIDE_PATH }} --set image.tag=${{ github.sha }},${{ env.CHART_OVERRIDES }} automated-deployment ${{ env.CHART_PATH }} --namespace ${{ env.NAMESPACE }} --create-namespace
 
