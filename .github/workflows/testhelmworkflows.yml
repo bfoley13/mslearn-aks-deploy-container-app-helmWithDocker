@@ -48,7 +48,7 @@ env:
   CLUSTER_NAME: test-helm-workflow
   DOCKER_FILE: ./Dockerfile
   BUILD_CONTEXT_PATH: ./
-  CHART_PATH: ./
+  CHART_PATH: ./Chart.yaml
   CHART_OVERRIDE_PATH: ./values.yaml
   CHART_OVERRIDES: image.repository='acrworkflow1729549671164.azurecr.io/image-workflow-1729549671164'
   NAMESPACE: namespace-workflow-1729549671164
