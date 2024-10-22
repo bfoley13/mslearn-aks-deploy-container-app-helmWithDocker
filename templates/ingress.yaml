@@ -13,3 +13,4 @@ spec:
               serviceName: {{ .Chart.Name }}
               servicePort: http
             path: /
+            pathType: Prefix
