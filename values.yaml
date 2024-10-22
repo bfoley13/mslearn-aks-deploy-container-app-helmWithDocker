@@ -1,4 +1,6 @@
-image: skdemoacr.azurecr.io/samples/contoso-website
+image: 
+  repository: skdemoacr.azurecr.io/samples/contoso-website
+  tag: latest
 containerPort: 80
 requests:
   cpu: 100m
