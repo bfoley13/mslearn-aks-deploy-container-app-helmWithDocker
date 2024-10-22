@@ -10,7 +10,9 @@ spec:
       http:
         paths:
           - backend:
-              serviceName: {{ .Chart.Name }}
-              servicePort: http
+              service:
+                name: {{ .Chart.Name }}
+                port:
+                  number: {{ .Values.containerPort }}
             path: /
             pathType: Prefix
