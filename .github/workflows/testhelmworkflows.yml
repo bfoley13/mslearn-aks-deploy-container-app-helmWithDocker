@@ -48,7 +48,7 @@ env:
   CLUSTER_NAME: test-helm-workflow
   DOCKER_FILE: ./Dockerfile
   BUILD_CONTEXT_PATH: ./
-  CHART_PATH: ./Chart.yaml
+  CHART_PATH: ./templates
   CHART_OVERRIDE_PATH: ./values.yaml
   CHART_OVERRIDES: image.repository='acrworkflow1729549671164.azurecr.io/image-workflow-1729549671164'
   NAMESPACE: namespace-workflow-1729549671164
@@ -115,10 +115,6 @@ jobs:
         run: |
           result=$(az aks show --resource-group ${{ env.CLUSTER_RESOURCE_GROUP }} --name ${{ env.CLUSTER_NAME }} --query "apiServerAccessProfile.enablePrivateCluster")
           echo "PRIVATE_CLUSTER=$result" >> "$GITHUB_OUTPUT"
-          if [ $result != 'true' && $result != 'false' && result != '' ]; then
-            echo "private cluster result is invalid: $result"
-            exit 1
-          fi
 
       # Deploys application
       - name: Deploy application on private cluster
@@ -134,6 +130,6 @@ jobs:
           fi
 
       - name: Deploy application on public cluster
-        if : steps.isPrivate.outputs.PRIVATE_CLUSTER == '' || steps.isPrivate.outputs.PRIVATE_CLUSTER == 'false'
+        if : steps.isPrivate.outputs.PRIVATE_CLUSTER != 'false'
         run: helm upgrade --wait -i -f ${{ env.CHART_OVERRIDE_PATH }} --set image.tag=${{ github.sha }},${{ env.CHART_OVERRIDES }} contoso-website ${{ env.CHART_PATH }} --namespace ${{ env.NAMESPACE }} --create-namespace
 
