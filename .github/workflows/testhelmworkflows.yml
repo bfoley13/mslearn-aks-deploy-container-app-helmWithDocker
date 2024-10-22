@@ -130,6 +130,6 @@ jobs:
           fi
 
       - name: Deploy application on public cluster
-        if : steps.isPrivate.outputs.PRIVATE_CLUSTER != 'false'
+        if : steps.isPrivate.outputs.PRIVATE_CLUSTER != 'true'
         run: helm upgrade --wait -i -f ${{ env.CHART_OVERRIDE_PATH }} --set image.tag=${{ github.sha }},${{ env.CHART_OVERRIDES }} contoso-website ${{ env.CHART_PATH }} --namespace ${{ env.NAMESPACE }} --create-namespace
 
